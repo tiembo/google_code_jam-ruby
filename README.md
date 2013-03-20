@@ -1,4 +1,3 @@
 Google Code Jam Practice
 
-Africa 2010
-#reverse_words
+Africa 2010 - `#reverse_words`
