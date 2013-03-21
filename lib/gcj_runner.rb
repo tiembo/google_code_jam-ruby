@@ -24,6 +24,18 @@ class GCJRunner
     output
   end
 
+  def t9_spelling
+    output = ''
+    num_cases = @file.readline.chomp.to_i
+
+    1.upto(num_cases) do |i|
+      str = @file.readline.chomp
+      output += "Case ##{i}: #{GoogleCodeJam.t9_spelling(str)}\n"
+    end
+
+    output
+  end
+
   def minimum_scalar_product
     output = ''
     num_cases = @file.readline.chomp.to_i

@@ -14,6 +14,19 @@ describe GoogleCodeJam do
     end
   end
 
+  describe '#t9_spelling' do
+    it 'returns t9 keypresses for given words' do
+      test_cases = [
+        ['hi', '44 444'],
+        ['yes', '999337777'],
+        ['foo  bar', '333666 6660 022 2777'],
+        ['hello world', '4433555 555666096667775553']
+      ]
+
+      test_cases.each { |c| GoogleCodeJam.t9_spelling(c.first).should == c.last }
+    end
+  end
+
   describe '#minimum_scalar_product' do
     it 'returns scalar product of two vectors' do
       test_cases = [
