@@ -1,3 +1,3 @@
 require './lib/gcj_runner'
 
-GCJRunner.new(ARGV).minimum_scalar_product
+puts GCJRunner.new(ARGV).minimum_scalar_product

@@ -13,22 +13,28 @@ class GCJRunner
   end
 
   def reverse_words
+    output = ''
     num_cases = @file.readline.chomp.to_i
 
     1.upto(num_cases) do |i|
       str = @file.readline.chomp
-      puts "Case ##{i}: "  + GoogleCodeJam.reverse_words(str)
+      output += "Case ##{i}: #{GoogleCodeJam.reverse_words(str)}\n"
     end
+
+    output
   end
 
   def minimum_scalar_product
+    output = ''
     num_cases = @file.readline.chomp.to_i
 
     1.upto(num_cases) do |i|
       num_vectors = @file.readline.chomp
       vector_a = @file.readline.chomp
       vector_b = @file.readline.chomp
-      puts "Case ##{i}: #{GoogleCodeJam.minimum_scalar_product(num_vectors, vector_a, vector_b)}"
+      output += "Case ##{i}: #{GoogleCodeJam.minimum_scalar_product(num_vectors, vector_a, vector_b)}\n"
     end
+
+    output
   end
 end
