@@ -37,4 +37,17 @@ describe GoogleCodeJam do
       test_cases.each { |c| GoogleCodeJam.minimum_scalar_product(c[0], c[1], c[2]).should == c.last }
     end
   end
+
+  describe '#password_problem' do
+    it 'returns keystrokes to return a correct password' do
+      test_cases = [
+        ['2 5', '0.6 0.6', '7.000000'],
+        ['1 20', '1', '20.000000'],
+        ['3 4', '1 0.9 0.1', '4.500000'],
+        ['3 10', '0.940672 0.178028 0.820738', '12.000000']
+      ]
+
+      test_cases.each { |c| GoogleCodeJam.password_problem(c[0], c[1]).should == c[2] }
+    end
+  end
 end

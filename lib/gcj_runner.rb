@@ -49,4 +49,17 @@ class GCJRunner
 
     output
   end
+
+  def password_problem
+    output = ''
+    num_cases = @file.readline.chomp.to_i
+
+    1.upto(num_cases) do |i|
+      line1 = @file.readline.chomp
+      line2 = @file.readline.chomp
+      output += "Case ##{i}: #{GoogleCodeJam.password_problem(line1, line2)}\n"
+    end
+
+    output
+  end
 end

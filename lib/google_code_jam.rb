@@ -38,5 +38,29 @@ class GoogleCodeJam
 
       sum
     end
+
+    def password_problem(line1, line2)
+
+      pressed_keystrokes, password_length = line1.split.map(&:to_i)
+      probabilities = line2.split.map(&:to_f)
+      correct_password_keystrokes = password_length + 1
+      keystrokes = 1 + correct_password_keystrokes # start with the case where we press enter right away
+
+      percentage_right = 1.0
+      num_backspaces = pressed_keystrokes
+
+      # don't care about the case where we backspace to erase the entire word -
+      # pressing enter to immediately start over will always be a lower keypress
+      probabilities.each do |p|
+        num_backspaces -= 1
+        percentage_right *= p
+        probability_for_num_backspaces = num_backspaces * 2 +                                   # backspace + forward space keypresses
+                                         (correct_password_keystrokes - pressed_keystrokes) +   # for completion of word
+                                         (1 - percentage_right) * (correct_password_keystrokes) # for probability of getting word correct
+        keystrokes = [keystrokes, probability_for_num_backspaces].min
+      end
+
+      '%0.6f' % keystrokes
+    end
   end
 end
