@@ -39,8 +39,23 @@ class GoogleCodeJam
       sum
     end
 
-    def password_problem(line1, line2)
+    def speaking_in_tongues(line)
+      mapping = {
+        'a' => 'y', 'b' => 'h', 'c' => 'e', 'd' => 's', 'e' => 'o',
+        'f' => 'c', 'g' => 'v', 'h' => 'x', 'i' => 'd', 'j' => 'u',
+        'k' => 'i', 'l' => 'g', 'm' => 'l', 'n' => 'b', 'o' => 'k',
+        'p' => 'r', 'q' => 'z', 'r' => 't', 's' => 'n', 't' => 'w',
+        'u' => 'j', 'v' => 'p', 'w' => 'f', 'x' => 'm', 'y' => 'a',
+        'z' => 'q', ' ' => ' '
+      }
+      result = ''
+      line.each_char do |char|
+        result += mapping[char]
+      end
+      result
+    end
 
+    def password_problem(line1, line2)
       pressed_keystrokes, password_length = line1.split.map(&:to_i)
       probabilities = line2.split.map(&:to_f)
       correct_password_keystrokes = password_length + 1
