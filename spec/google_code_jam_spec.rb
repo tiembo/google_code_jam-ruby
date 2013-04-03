@@ -51,6 +51,19 @@ describe GoogleCodeJam do
     end
   end
 
+  describe '#recycled_numbers' do
+    it 'returns count of recycled numbers' do
+      test_cases = [
+        ['1 9', 0],
+        ['10 40', 3],
+        ['100 500', 156],
+        ['1111 2222', 287] # to check 1212
+      ]
+
+      test_cases.each { |c| GoogleCodeJam.recycled_numbers(c[0]).should == c[1] }
+    end
+  end
+
   describe '#password_problem' do
     it 'returns keystrokes to return a correct password' do
       test_cases = [

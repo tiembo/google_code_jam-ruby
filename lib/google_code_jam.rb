@@ -55,6 +55,49 @@ class GoogleCodeJam
       result
     end
 
+    def recycled_numbers(line)
+      start_num, end_num = line.split.map(&:to_i)
+      num_digits = start_num.to_s.length
+
+      evaluated_numbers = {} # keys as integers are slower than keys as strings
+      count = 0
+      start_num.upto(end_num) do |n|
+        num = n.to_s
+        next if evaluated_numbers[num]
+
+        # this check is expensive and unecessary - skip
+        #next if num.split('').uniq.count == 1
+
+        evaluated_numbers[num] = true
+
+        ary = num.split('')
+        increment = 1
+        1.upto(num_digits - 1) do |i|
+          num_string = ary.rotate(i).join
+
+          # for numbers such as 1212
+          if evaluated_numbers[num_string]
+            next
+          else
+            evaluated_numbers[num_string] = true
+
+            # faster here than as another conditional for parent if statement
+            if num_string[0] != '0' # faster than num_string.length == num_digits for large number ranges
+              num = num_string.to_i
+
+              # comparison of number here is slightly faster than comparing strings
+              if num >= start_num && num <= end_num
+                count += increment
+                increment += 1
+              end
+            end
+          end
+        end
+      end
+
+      count
+    end
+
     def password_problem(line1, line2)
       pressed_keystrokes, password_length = line1.split.map(&:to_i)
       probabilities = line2.split.map(&:to_f)
