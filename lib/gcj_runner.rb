@@ -62,6 +62,18 @@ class GCJRunner
     output
   end
 
+  def dancing_with_the_googlers
+    output = ''
+    num_cases = @file.readline.chomp.to_i
+
+    1.upto(num_cases) do |i|
+      line = @file.readline.chomp
+      output += "Case ##{i}: #{GoogleCodeJam.dancing_with_the_googlers(line)}\n"
+    end
+
+    output
+  end
+
   def recycled_numbers
     output = ''
     num_cases = @file.readline.chomp.to_i

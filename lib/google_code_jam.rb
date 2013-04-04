@@ -55,6 +55,49 @@ class GoogleCodeJam
       result
     end
 
+    def dancing_with_the_googlers(line)
+
+      # returns [normal, surprising] scores for a given total
+      def find_scores(total_score)
+        return [[0,0,0], nil] if total_score == '0'
+        return [[0,0,1], nil] if total_score == '1'
+        return [[9,10,10], nil] if total_score == '29'
+        return [[10,10,10], nil] if total_score == '30'
+
+        ts = total_score.to_i
+        remainder = ts % 3
+        div = ts / 3
+        if remainder == 0
+          [[div,div,div],[div-1,div,div+1]]
+        elsif remainder == 1
+          [[div,div,div+1],[div-1,div+1,div+1]]
+        else # remainder == 2
+          [[div,div+1,div+1],[div,div,div+2]]
+        end
+      end
+
+      values = line.split
+      #num_googlers = values[0].to_i # value not used
+      num_surprising_scores = values[1].to_i
+      best_result_of_at_least = values[2].to_i
+      scores = values[3..values.length - 1]
+
+      num_better_than_least = 0
+
+      scores.each do |s|
+        normal_score, surprising_score = find_scores(s)
+
+        if normal_score.any? {|a| a >= best_result_of_at_least}
+          num_better_than_least += 1
+        elsif (surprising_score != nil) && (num_surprising_scores > 0) && (surprising_score.any? {|a| a >= best_result_of_at_least})
+          num_better_than_least += 1
+          num_surprising_scores -= 1
+        end
+      end
+
+      num_better_than_least
+    end
+
     def recycled_numbers(line)
       start_num, end_num = line.split.map(&:to_i)
       num_digits = start_num.to_s.length

@@ -47,7 +47,20 @@ describe GoogleCodeJam do
         ['de kr kd eoya kw aej tysr re ujdr lkgc jv', 'so it is okay if you want to just give up']
       ]
 
-      test_cases.each { |c| GoogleCodeJam.speaking_in_tongues(c[0]).should == c[1]}
+      test_cases.each { |c| GoogleCodeJam.speaking_in_tongues(c[0]).should == c[1] }
+    end
+  end
+
+  describe '#dancing_with_the_googlers' do
+    it 'returns number of gogolers with a score greater than a given value' do
+      test_cases = [
+        ['3 1 5 15 13 11', 3],
+        ['3 0 8 23 22 21', 2],
+        ['2 1 1 8 0', 1],
+        ['6 2 8 29 20 8 18 18 21', 3]
+      ]
+
+      test_cases.each { |c| GoogleCodeJam.dancing_with_the_googlers(c[0]).should == c[1] }
     end
   end
 
