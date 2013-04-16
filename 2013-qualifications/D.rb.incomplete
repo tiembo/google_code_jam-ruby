@@ -1,0 +1,114 @@
+debug = true
+file = File.open(ARGV[0])
+num_cases = file.readline.chomp.to_i
+
+1.upto(num_cases) do |i|
+  num_keys, num_chests = file.readline.chomp.split.map(&:to_i)
+  keys = file.readline.chomp.split.map(&:to_i)
+
+  chests = []
+
+  num_chests.times do
+    data = file.readline.chomp.split.map(&:to_i)
+    if data[1] == 0
+      chests << [data[0], nil]
+    else
+      chests << [data[0], data[2..data.length-1]]
+    end
+  end
+
+  output = []
+
+  while chests.uniq != [nil]
+    if debug
+      puts 'chest data'
+      chests.each do |c|
+        puts c.inspect
+      end
+    end
+
+    # determine which chests can be opened
+    chests_can_open = []
+    chests.each_with_index do |c, j|
+      if c != nil && keys.include?(c.first)
+        chests_can_open << j
+      end
+    end
+
+    puts "list of keys: #{keys}" if debug
+    puts "chests that can be opened: #{chests_can_open.inspect}" if debug
+
+    # abort if no chests can be opened and there are still unopened chests
+    if chests_can_open.empty? && chests.uniq != [nil]
+      output = 'IMPOSSIBLE'
+      break
+    end
+
+    # choose chest to open
+    chests_with_keys = []
+
+    chests_can_open.each do |c|
+      chests_with_keys << c if chests[c][1] != nil
+    end
+
+    chest_to_open = nil
+    chests_can_open.each do |c|
+
+      potentially_used_key = chests[c].first
+      other_chests_need_this_key = false
+
+      # check if other chests need this key
+      chests_can_open.each do ||
+    end
+
+    puts "chests with keys: #{chests_with_keys.inspect}" if debug
+
+    #if chests_with_keys.empty?
+    #  chest_to_open = chests_can_open.first
+    #else
+    #  chest_with_own_key = nil
+    #
+    #  chests_with_keys.each do |cwk|
+    #
+    #    # chest with own key
+    #    if chests[cwk].last.include?(chests[cwk].first)
+    #      if keys.count(chests[cwk].first) == 1
+    #        chest_with_own_key = cwk
+    #        break
+    #      end
+    #    end
+    #  end
+    #
+    #  #chest_to_open = (
+    #  #if chest_with_own_key == nil then
+    #  #  if keys.count > 1
+    #  #    chests_can_open.first
+    #  #  else
+    #  #    chests_with_keys.first
+    #  #  end
+    #  #else
+    #  #    chest_with_own_key
+    #  #end)
+    #end
+
+    puts "opening chest #{chest_to_open}" if debug
+
+    keys.delete_at(keys.index(chests[chest_to_open].first))
+    new_keys = chests[chest_to_open].last
+
+    puts "new keys to add: #{new_keys}" if debug
+
+    if new_keys != nil
+      keys += new_keys
+    end
+
+    chests[chest_to_open] = nil
+    output << chest_to_open + 1
+
+    puts if debug
+  end
+
+  output = output.join(' ') unless output == 'IMPOSSIBLE'
+  puts "Case ##{i}: #{output}"
+  puts '*' * 80 if debug
+end
