@@ -1,0 +1,36 @@
+def algorithm(line1,line2)
+  e, r, _ = line1.split.map(&:to_i)
+  activities = line2.split.map(&:to_i)
+
+  return activities.reduce(:+) * e if e == r
+
+  total = 0
+  max_a = activities.max
+  max_e = e
+
+  activities.each_with_index do |a, i|
+    puts max_a
+    if a == max_a
+      total += e * a
+      e = r
+      max_a = activities[i+1..activities.length].max
+    else
+      if max_e == e # max energy
+        total += r * a
+      else
+        e += r
+      end
+    end
+  end
+
+  total
+end
+
+file = File.open(ARGV[0])
+num_cases = file.readline.chomp.to_i
+
+1.upto(num_cases) do |i|
+  line1 = file.readline.chomp
+  line2 = file.readline.chomp
+  puts "Case ##{i}: #{algorithm(line1,line2)}"
+end
