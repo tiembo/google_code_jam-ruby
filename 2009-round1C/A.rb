@@ -1,22 +1,22 @@
 def algorithm(line1)
-
-  # process first character
   char_mapping = {"#{line1[0]}" => 1} # first mapped character should be 1
-  decoded_string = ''
   next_mapping = 0 # increment: 0, 2, 3, 4, ...
 
-  line1.split('').each do |char|
+  line1.each_char do |char|
     if char_mapping[char].nil?
       char_mapping[char] = next_mapping
       next_mapping == 0 ? next_mapping = 2 : next_mapping += 1
     end
-
-    decoded_string += char_mapping[char].to_s
   end
 
-  base = char_mapping.length
-  base = 2 if base < 2
-  decoded_string.to_i(base)
+  result = 0
+  base = (char_mapping.length < 2 ? 2 : char_mapping.length)
+
+  str_len = line1.size
+  line1.split('').each_with_index do |char, i|
+    result += char_mapping[char] * base ** (str_len - 1 - i)
+  end
+  result
 end
 
 file = File.open(ARGV[0])
